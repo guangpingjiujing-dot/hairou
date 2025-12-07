@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Student {
+  student_id      Int      @id
+  name            String   @db.VarChar(200)
+  email           String   @unique @db.VarChar(200)
+  enrollment_date DateTime @db.Timestamp(6)
+
+  @@map("students")
+}
+
+model courses {
+  course_id     Int      @id
+  title         String   @db.VarChar(200)
+  description   String?
+  monthly_price Decimal  @db.Decimal(10, 2)
+  created_at    DateTime @db.Timestamp(6)
+}
+
+model enrollments {
+  enrollment_id Int      @id
+  student_id    Int
+  course_id     Int
+  enrolled_at   DateTime @db.Timestamp(6)
+  status        String   @db.VarChar(20)
+}
+
+model lessons {
+  lesson_id        Int      @id
+  enrollment_id    Int
+  scheduled_at     DateTime @db.Timestamp(6)
+  duration_minutes Int
+  status           String   @db.VarChar(20)
+  notes            String?
+}
+
+model reviews {
+  review_id     Int      @id
+  submission_id Int
+  rating        Int?
+  feedback      String?
+  reviewed_at   DateTime @db.Timestamp(6)
+}
+
+model video_submissions {
+  submission_id Int      @id
+  lesson_id     Int
+  title         String   @db.VarChar(200)
+  video_url     String?  @db.VarChar(500)
+  submitted_at  DateTime @db.Timestamp(6)
+  status        String   @db.VarChar(20)
+}

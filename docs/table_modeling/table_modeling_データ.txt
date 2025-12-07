@@ -1,0 +1,94 @@
+【基本例：students テーブル】
+student_id	name	email	enrollment_date
+101	田中 一郎	ichiro.tanaka@example.com	2024-01-05 09:00:00
+102	高橋 美咲	misaki.takahashi@example.com	2024-01-10 10:30:00
+
+
+【正規化されていない例：enrollments_bad テーブル】
+id	生徒名	メールアドレス	登録日	コース名	月額料金	受講登録日
+1	田中一郎	ichiro@example.com	2024-01-05	英会話基礎コース	15000	2024-01-05 09:15:00
+2	田中一郎	ichiro@example.com	2024-01-05	英会話中級コース	20000	2024-01-20 10:00:00
+3	高橋美咲	misaki@example.com	2024-01-10	英会話基礎コース	15000	2024-01-10 10:45:00
+
+
+【正規化後：students テーブル】
+student_id	name	email
+101	田中 一郎	ichiro.tanaka@example.com
+102	高橋 美咲	misaki.takahashi@example.com
+
+
+【正規化後：courses テーブル】
+course_id	title	monthly_price
+201	英会話基礎コース	15000
+202	英会話中級コース	20000
+
+
+【正規化後：enrollments テーブル】
+enrollment_id	student_id	course_id
+301	101	201
+302	101	202
+303	102	201
+
+
+【第1正規形（1NF）違反例：students_bad テーブル】
+id	name	email	courses
+1	田中一郎	ichiro@example.com	英会話基礎, 英会話中級
+
+
+【第1正規形（1NF）正規化後：students テーブル】
+id	name	email
+1	田中一郎	ichiro@example.com
+2	高橋美咲	misaki@example.com
+
+
+【第1正規形（1NF）正規化後：enrollments テーブル】
+id	student_id	course_id
+1	1	201
+2	1	202
+3	2	201
+
+
+【第2正規形（2NF）違反例：enrollments_bad テーブル（主キー：(student_id, course_id)）】
+student_id	course_id	course_title	monthly_price
+101	201	英会話基礎コース	15000
+101	202	英会話中級コース	20000
+102	201	英会話基礎コース	15000
+
+
+【第2正規形（2NF）正規化後：enrollments テーブル】
+enrollment_id	student_id	course_id
+301	101	201
+302	101	202
+303	102	201
+
+
+【第2正規形（2NF）正規化後：courses テーブル】
+course_id	title	monthly_price
+201	英会話基礎コース	15000
+202	英会話中級コース	20000
+
+
+【第3正規形（3NF）違反例：courses_bad テーブル（主キー：course_id）】
+course_id	title	monthly_price	category_id	category_name
+201	英会話基礎コース	15000	1	基礎コース
+202	英会話中級コース	20000	2	中級コース
+
+
+【第3正規形（3NF）正規化後：courses テーブル】
+course_id	title	monthly_price	category_id
+201	英会話基礎コース	15000	1
+202	英会話中級コース	20000	2
+
+
+【第3正規形（3NF）正規化後：categories テーブル】
+category_id	name
+1	基礎コース
+2	中級コース
+
+
+【演習問題：orders_bad テーブル】
+order_id	顧客名	顧客メール	商品名	商品カテゴリ	価格
+1	田中	tanaka@example.com	ノート	文房具	100
+2	田中	tanaka@example.com	ペン	文房具	200
+3	佐藤	sato@example.com	ノート	文房具	100
+
