@@ -32,7 +32,9 @@ CREATE TABLE enrollments (
   student_id INT NOT NULL,
   course_id INT NOT NULL,
   enrolled_at TIMESTAMP NOT NULL,
-  status VARCHAR(20) NOT NULL -- 'active', 'completed', 'cancelled'
+  status VARCHAR(20) NOT NULL, -- 'active', 'completed', 'cancelled'
+  FOREIGN KEY (student_id) REFERENCES students(student_id),
+  FOREIGN KEY (course_id) REFERENCES courses(course_id)
 );
 
 -- Lessons: 授業スケジュール（1つの受講登録に対して複数回のレッスン）
@@ -42,7 +44,8 @@ CREATE TABLE lessons (
   scheduled_at TIMESTAMP NOT NULL,
   duration_minutes INT NOT NULL,
   status VARCHAR(20) NOT NULL, -- 'scheduled', 'completed', 'cancelled'
-  notes TEXT
+  notes TEXT,
+  FOREIGN KEY (enrollment_id) REFERENCES enrollments(enrollment_id)
 );
 
 -- Video Submissions: ビデオ提出
@@ -52,7 +55,8 @@ CREATE TABLE video_submissions (
   title VARCHAR(200) NOT NULL,
   video_url VARCHAR(500),
   submitted_at TIMESTAMP NOT NULL,
-  status VARCHAR(20) NOT NULL -- 'submitted', 'reviewed', 'revised'
+  status VARCHAR(20) NOT NULL, -- 'submitted', 'reviewed', 'revised'
+  FOREIGN KEY (lesson_id) REFERENCES lessons(lesson_id)
 );
 
 -- Reviews: レビュー（教師によるビデオ提出へのレビュー）
@@ -61,7 +65,8 @@ CREATE TABLE reviews (
   submission_id INT NOT NULL,
   rating INT, -- 1-5の評価
   feedback TEXT,
-  reviewed_at TIMESTAMP NOT NULL
+  reviewed_at TIMESTAMP NOT NULL,
+  FOREIGN KEY (submission_id) REFERENCES video_submissions(submission_id)
 );
 
 
