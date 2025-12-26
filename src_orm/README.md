@@ -24,19 +24,21 @@ SQLAlchemy は、Python でデータベースを操作するためのライブ�
 
 ## SQLAlchemy Core と ORM
 
-SQLAlchemy には、2つの主要な使い方があります：
+SQLAlchemy には、2 つの主要な使い方があります：
 
 ### SQLAlchemy Core
 
 **SQLAlchemy Core** は、SQL に近い低レベルの API です。
 
 **特徴:**
+
 - テーブル定義を `Table` オブジェクトで記述
 - クエリを `select()`, `insert()`, `update()`, `delete()` で記述
 - より細かい制御が可能
 - パフォーマンスを重視する場合に適している
 
 **例:**
+
 ```python
 from sqlalchemy import select, Table, Column, Integer, String
 
@@ -56,12 +58,14 @@ result = conn.execute(query)
 **SQLAlchemy ORM** (Object-Relational Mapping) は、データベースのテーブルを Python のクラスとして扱えます。
 
 **特徴:**
+
 - テーブルをクラスとして定義
 - オブジェクト操作でデータベースを操作
 - リレーションシップを簡単に扱える
 - コードが読みやすく、保守しやすい
 
 **例:**
+
 ```python
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -103,11 +107,13 @@ pip install sqlalchemy psycopg2-binary python-dotenv
 このサンプルは PostgreSQL を想定していますが、SQLite でも動作します。
 
 **PostgreSQL の場合:**
+
 1. PostgreSQL をインストール
 2. データベースを作成
 3. `docs/sql/01_ddl.sql` と `docs/sql/02_seed.sql` を実行してテーブルとデータを作成
 
 **SQLite の場合（簡単に試したい場合）:**
+
 ```python
 # 接続URLを変更
 DATABASE_URL = 'sqlite:///example.db'
@@ -144,6 +150,7 @@ python orm_example.py
 SQLAlchemy Core を使ったサンプルプログラムです。
 
 **含まれる例:**
+
 1. すべての生徒を取得
 2. 条件付きで生徒を取得
 3. 特定のカラムのみ取得
@@ -160,8 +167,9 @@ SQLAlchemy Core を使ったサンプルプログラムです。
 SQLAlchemy ORM を使ったサンプルプログラムです。
 
 **含まれる例:**
+
 1. すべての生徒を取得
-2. IDで生徒を取得
+2. ID で生徒を取得
 3. 条件で生徒をフィルタリング
 4. リレーションシップを使う
 5. JOIN を使ったクエリ
@@ -350,6 +358,7 @@ finally:
 リレーションシップを取得する際、クエリが多くなりすぎる問題：
 
 **悪い例:**
+
 ```python
 students = session.query(Student).all()
 for student in students:
@@ -358,6 +367,7 @@ for student in students:
 ```
 
 **良い例（Eager Loading）:**
+
 ```python
 from sqlalchemy.orm import joinedload
 
