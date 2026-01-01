@@ -1,4 +1,5 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from typing import List
 
@@ -7,6 +8,15 @@ from models import Student, Course
 from schemas import StudentCreate, StudentResponse, CourseCreate, CourseResponse
 
 app = FastAPI(title="学習管理システムAPI", description="シンプルなFastAPI + SQLAlchemy実装")
+
+# CORS設定（ブラウザからのアクセスを許可）
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 本番環境では特定のオリジンのみ許可することを推奨
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ========== Students エンドポイント ==========

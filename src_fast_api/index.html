@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>生徒一覧取得</title>
+</head>
+<body>
+    <button onclick="fetchStudents()">生徒一覧を取得</button>
+    <div id="result"></div>
+
+    <script>
+        async function fetchStudents() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = '取得中...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/students');
+                const data = await response.json();
+                resultDiv.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                resultDiv.textContent = 'エラー: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>
+
